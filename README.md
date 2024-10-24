@@ -1,6 +1,6 @@
 # Deep_Learning_Project_Buket_Kalfa
 Bu proje, bir balık veri seti üzerinde yapay sinir ağları (ANN) ve evrişimli sinir ağları (CNN) kullanarak balık türlerini sınıflandırmayı amaçlamaktadır. Proje kapsamında kullanılan veri seti, farklı balık türlerine ait görüntülerden oluşmaktadır. Model, bu görüntülerden yola çıkarak balık türlerini sınıflandırmayı öğrenir.
- https://www.kaggle.com/code/buketkalfa/a-large-scale-fish-dataset-buket-kalfa/edit
+[Kaggle Notebook "A_Large_Scale_Fish_Dataset_Buket_Kalfa_" linki]https://www.kaggle.com/code/buketkalfa/a-large-scale-fish-dataset-buket-kalfa/
 # Veri Seti
 Bu projede kullanılan veri seti, Kaggle üzerinde bulunan geniş ölçekli bir balık veri setidir. Veri seti, 9 farklı balık türüne ait toplamda 18.000 görüntü içermektedir.
 
