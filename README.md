@@ -28,31 +28,43 @@ CNN modeli, görsel verileri işleyip sınıflandırma yapabilen güçlü bir mo
 ###  Flatten katmanı
 128 nöronlu tam bağlantılı (Dense) katman
 ###  Çıkış katmanı: Softmax ile 9 sınıfı sınıflandırır.
-##  3. ANN Modeli
-ANN modeli ise daha basit bir sinir ağı yapısıdır ve görüntü verilerini tek boyutlu vektörlere dönüştürerek işlem yapar. Bu model şu katmanlardan oluşur:
-
-Giriş Katmanı: (224x224x3) görüntüyü düzleştiren (Flatten) bir katman
-3 adet Tam Bağlantılı (Dense) katman
-Çıkış katmanı: Softmax ile 9 sınıfı sınıflandırır.
-##  4. Eğitim
+##  3. Eğitim
 Her iki model de 10 epoch boyunca eğitilmiştir ve aşağıdaki sonuçlar elde edilmiştir:
 
 ####  CNN Modeli Sonuçları:
-Eğitim Doğruluğu: %99
-Doğrulama Doğruluğu: %84.5
-Eğitim Kaybı: 0.0261
-Doğrulama Kaybı: 0.6626
-ANN Modeli Sonuçları:
-Eğitim Doğruluğu: %83
-Doğrulama Doğruluğu: %59.5
-Eğitim Kaybı: 0.4674
-Doğrulama Kaybı: 1.3899
-##  5. Sonuç
-CNN modeli, ANN modeline kıyasla daha iyi sonuçlar vermiştir ve doğrulama verisinde %84.5 oranında doğruluk elde etmiştir. ANN modeli ise %59.5 doğruluk ile CNN modelinin gerisinde kalmıştır.
+Model, her biri 9 farklı balık sınıfını temsil eden 7200 görüntü üzerinde eğitildi. Eğitim sırasında model parametreleri güncellenerek, sınıflar arasında en yüksek doğruluk oranına ulaşılması hedeflendi. Aşağıdaki adımlar kullanılarak eğitim süreci yapılandırılmıştır:
 
-Kullanılan Teknolojiler
-Python 3
-TensorFlow / Keras
-Pandas
-NumPy
-Matplotlib (veri görselleştirme)
+####  1. **Veri Önişleme ve Artırma**:
+    - Rescale: Görseller `1./255` ile normalize edildi.
+    - Veri artırma işlemleri:
+        - Döndürme (`rotation_range=20`)
+        - Genişlik ve yükseklik kaydırmaları (`width_shift_range=0.2`, `height_shift_range=0.2`)
+        - Kesme (`shear_range=0.2`)
+        - Yakınlaştırma (`zoom_range=0.2`)
+        - Yatay çevirme (`horizontal_flip=True`)
+
+####  2. **Eğitim Parametreleri**:
+    - Epoch sayısı: 10
+    - Batch boyutu: 32
+    - Optimizasyon: `Adam` optimizer, varsayılan ayarlarla.
+    - Kayıp Fonksiyonu: `Categorical Crossentropy`
+    - Sınıf modu: Kategorik (`categorical`) olarak tanımlandı.
+
+### Model Eğitimi
+
+Model, eğitimin her epoch'unda belirli bir doğruluk ve kayıp değerine ulaşmıştır. Epoch sonuçlarına göre doğruluk oranında belirli bir artış gözlenmiş, ancak doğrulama kaybı bazı epoch'larda yüksek kalmıştır
+
+### Model Doğrulama Sonuçları
+
+Eğitim sonrasında, model doğrulama veri seti üzerinde test edilmiştir. Doğrulama sonuçları şu şekildedir:
+- **Doğrulama Kaybı**: 15.7350
+- **Doğrulama Doğruluğu**: %41.78
+
+### Değerlendirme ve İyileştirme Önerileri
+
+Modelin doğrulama doğruluğu (%41.78) ve doğrulama kaybı değerleri, modelin daha iyi bir performansa ulaşabilmesi için iyileştirilmesi gerektiğini göstermektedir. Önerilen bazı geliştirmeler şunlardır:
+- **Model Mimarisi**: Ekstra Conv2D katmanları veya Dropout katmanları ekleyerek aşırı uyum önlenebilir.
+- **Hiperparametre Ayarları**: Epoch sayısını artırmak ve `learning_rate` ayarları ile oynayarak daha iyi sonuçlar elde edilebilir.
+- **Veri Artırma**: Görseller üzerindeki veri artırma parametreleri üzerinde daha fazla çalışarak veri çeşitliliği artırılabilir.
+
+Bu eğitim ve doğrulama süreçleri, modelin hangi alanlarda iyileştirilmeye açık olduğunu ortaya koymaktadır.
